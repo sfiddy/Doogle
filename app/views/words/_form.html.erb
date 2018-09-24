@@ -1,0 +1,23 @@
+<%= form_with(model: word, local: true) do |form| %>
+
+  <% if word.errors.any? %>
+    <div class="alert alert-danger">
+      <h5 class="alert-heading">
+        <%= pluralize(word.errors.count, "error") %> prohibited this word from being searched
+      </h5>
+      <ul>
+        <% word.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field"> 
+    <%= form.text_field :term, class: "form-control", id: "search-box", placeholder: "enter word..." %>
+  </div>
+  
+  <div class="actions">
+    <%= form.submit "search", class: "btn btn-primary btn-block", id: "search-btn" %>
+  </div>
+<% end %>
