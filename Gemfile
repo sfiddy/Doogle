@@ -19,12 +19,15 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'rails-controller-testing'
+  gem 'factory_bot_rails'
   gem 'sqlite3'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 group :test do
   gem 'capybara'
+  gem 'shoulda-matchers'
 end
 
 group :development do
