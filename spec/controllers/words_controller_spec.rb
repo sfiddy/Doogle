@@ -55,20 +55,21 @@ RSpec.describe WordsController, type: :controller do
   end
 
   describe "POST #create" do
-    context "with valid params" do
+    context "with a valid word" do
+      
       it "creates a new Word" do
         expect {
-          post :create, params: {word: valid_attributes}, session: valid_session
+          post :create, params: {word: FactoryBot.attributes_for(:new_word)}, session: valid_session
         }.to change(Word, :count).by(1)
       end
-
-      it "redirects to the created word" do
-        post :create, params: {word: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Word.last)
+      
+      it "redirects to the created word's show page" do
+        post :create, params: { word: FactoryBot.attributes_for(:new_word) }
+        expect(response).to redirect_to(word_path(assigns[:word]))
       end
     end
 
-    context "with invalid params" do
+    context "with an invalid word" do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: {word: invalid_attributes}, session: valid_session
         expect(response).to be_successful
