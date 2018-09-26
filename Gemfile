@@ -16,6 +16,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'jquery-rails'
+gem 'faraday'
+gem 'nokogiri'
 
 group :development, :test do
   gem 'rspec-rails'
