@@ -23,5 +23,5 @@ url | action | purpose
 * `factory_bot_rails` was used instead of `FactoryGirl` given the fact that the latter is deprecated for Rails 5+
 
 
-### API Resources
-* [Stack Overflow - Rails Way to call external api from view](https://stackoverflow.com/questions/42287004/rails-way-to-call-external-api-from-view)
+### Useful Resources used
+* [Nokogiri Cheat Sheet](https://github.com/sparklemotion/nokogiri/wiki/Cheat-sheet)
