@@ -1,4 +1,4 @@
 $("#definitions").html("<%= @word.term %>");
 
 
-$("#payload").html("<% @definitions.each do |definition| %> <li><%= definition.to_s.gsub!(/<..>/, '').gsub!(/<\/..>/, '') %></li> <% end %>")
+$("#payload").html("<% @definitions.each do |definition| %> <li><%= definition %></li> <% end %>")

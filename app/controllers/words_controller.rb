@@ -19,11 +19,10 @@ class WordsController < ApplicationController
 
   def create
     @word = Word.new(word_params)
-    @response = Faraday.get "https://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{@word.term}?key=cab72891-f003-43ef-a983-253666d45082"
+    @response = Faraday.get "https://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{@word.term}?key=[YOUR_KEY_GOES_HERE]"
     @xml_doc  = Nokogiri::XML(@response.body)
-    @definitions = @xml_doc.xpath("//dt")
     
-    parse_definitions_payload(@xml_doc)
+    @definitions = parse_definitions_payload(@xml_doc)
     
     respond_to do |format|
       if @word.save
@@ -71,10 +70,15 @@ class WordsController < ApplicationController
     end
     
     def parse_definitions_payload(payload)
-      # @filtered_definitions = payload.xpath("//entry[id=#{@word.term}]//dt")
-      @filtered_definitions = payload.xpath("//def").first.xpath("//dt")
+      first_entry = payload.xpath("//entry").first
       
-      puts "------------------------"
-      puts @filtered_definitions
+      @definitions = Array.new
+      
+      first_entry.children.xpath("dt").each do |d|
+        definition = d.text.gsub!(/^:/, '')
+        @definitions.push(definition)
+      end
+      
+      return @definitions
     end
 end
