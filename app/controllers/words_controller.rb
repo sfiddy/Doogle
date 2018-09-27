@@ -22,7 +22,7 @@ class WordsController < ApplicationController
     
     respond_to do |format|
       if @word.save
-        @response = Faraday.get "https://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{@word.term}?key=[YOUR_KEY_HERE]"
+        @response = Faraday.get "https://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{@word.term}?key=#{ENV['DICTIONARY_API_KEY_DEV']}"
         @payload  = Nokogiri::XML(@response.body)
         @definitions = parse_definitions_payload(@payload)
         
