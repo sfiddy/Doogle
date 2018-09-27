@@ -19,13 +19,13 @@ class WordsController < ApplicationController
 
   def create
     @word = Word.new(word_params)
-    @response = Faraday.get "https://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{@word.term}?key=[YOUR_KEY_GOES_HERE]"
-    @xml_doc  = Nokogiri::XML(@response.body)
-    
-    @definitions = parse_definitions_payload(@xml_doc)
     
     respond_to do |format|
       if @word.save
+        @response = Faraday.get "https://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{@word.term}?key=cab72891-f003-43ef-a983-253666d45082"
+        @payload  = Nokogiri::XML(@response.body)
+        @definitions = parse_definitions_payload(@payload)
+        
         format.html { redirect_to @word, notice: 'Word was successfully created.' }
         format.json { render :show, status: :created, location: @word }
         format.js

@@ -10,7 +10,7 @@ RSpec.describe Word, type: :model do
       end
       
       it "should display an error" do
-        word = Word.new(term: ' ')
+        word = FactoryBot.build(:word, term: ' ' )
         word.valid?
         expect(word.errors[:term]).not_to be_empty
       end

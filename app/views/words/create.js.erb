@@ -1,4 +1,4 @@
-$("#definitions").html("<%= @word.term %>");
+$("#word").html("<%= @word.term %>");
 
 
-$("#payload").html("<% @definitions.each do |definition| %> <li><%= definition %></li> <% end %>")
+$("#definitions").html("<% @definitions.each do |definition| %> <li><%= definition %></li> <% end %>")
