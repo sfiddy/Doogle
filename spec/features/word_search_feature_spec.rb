@@ -1,11 +1,15 @@
 require 'rails_helper'
 
-RSpec.feature "Word Search" do
+RSpec.feature "Word Search", js: true do
   scenario "A user searches for a valid word" do
     visit "/"
     fill_in "search-box", with: "Ruby"
     click_button "search-btn"
-    expect(page).to have_content("Ruby")
+    
+    save_page
+    within '#word' do
+      expect(page).to have_content("Ruby")
+    end
   end
 
   scenario "A user searches for an blank word" do
