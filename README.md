@@ -9,14 +9,6 @@ word can have multiple definitions.
 
 ![Database Design](/app/assets/images/documentation/database_design.png)
 
-## Architecture
-### Words
-
-url | action | purpose
-:---: | :---: | :---:
-/ | new | 
-/show | show | page that shows the definition of the new word
-
 ----
 
 ### Important to note
