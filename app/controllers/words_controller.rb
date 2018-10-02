@@ -22,13 +22,11 @@ class WordsController < ApplicationController
     
     respond_to do |format|
       if @word.save
-        @response = Faraday.get "https://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{@word.term}?key=#{ENV['DICTIONARY_API_KEY_DEV']}"
-        @payload  = Nokogiri::XML(@response.body)
-        @definitions = parse_definitions_payload(@payload)
-        
+        service = WebServices::DictionaryApi.new(@word.term)
+        @definitions = service.all_definitions
+        format.js
         format.html { redirect_to @word, notice: 'Word was successfully created.' }
         format.json { render :show, status: :created, location: @word }
-        format.js
       else
         format.html { render :new }
         format.json { render json: @word.errors, status: :unprocessable_entity }
@@ -67,18 +65,5 @@ class WordsController < ApplicationController
 
     def word_params
       params.require(:word).permit(:term)
-    end
-    
-    def parse_definitions_payload(payload)
-      first_entry = payload.xpath("//entry").first
-      
-      @definitions = Array.new
-      
-      first_entry.children.xpath("dt").each do |d|
-        definition = d.text.gsub!(/^:/, '')
-        @definitions.push(definition)
-      end
-      
-      return @definitions
     end
 end

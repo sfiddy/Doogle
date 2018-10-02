@@ -2,6 +2,10 @@ require "rails_helper"
 
 RSpec.describe WordsController, type: :routing do
   describe "routing" do
+    it "routes the landing page to words#new" do
+      expect(:get => "/").to route_to("words#new")
+    end
+    
     it "routes to #index" do
       expect(:get => "/words").to route_to("words#index")
     end
@@ -17,7 +21,6 @@ RSpec.describe WordsController, type: :routing do
     it "routes to #edit" do
       expect(:get => "/words/1/edit").to route_to("words#edit", :id => "1")
     end
-
 
     it "routes to #create" do
       expect(:post => "/words").to route_to("words#create")
