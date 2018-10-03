@@ -25,12 +25,18 @@ class WordsController < ApplicationController
     respond_to do |format|
       if @definitions.empty?
         @word.set_valid(false)
+      else
+        @word.set_valid(true)
       end
       
+      puts "-------------------"
+      
       if @word.save
+        puts "when word is saved, @word.get_valid : #{@word.get_valid}"
         format.js
         format.json { render :show, status: :created, location: @word }
       else
+        puts "when word is not saved, @word.get_valid : #{@word.get_valid}"
         format.js
         format.html { render :new }
         format.json { render json: @word.errors, status: :unprocessable_entity }
