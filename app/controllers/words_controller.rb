@@ -1,4 +1,5 @@
 require_relative '../../lib/web_services/dictionary_api'
+
 class WordsController < ApplicationController
   before_action :set_word, only: [:show, :edit, :update, :destroy]
   before_action :all_words, only: [:new, :create]
@@ -23,7 +24,6 @@ class WordsController < ApplicationController
     
     @definitions = get_definitions(@word.term)
     @pronunciation = get_pronunciation(@word.term)
-    
     
     respond_to do |format|
       if @definitions.empty?
