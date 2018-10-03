@@ -78,7 +78,7 @@ class WordsController < ApplicationController
     end
     
     def get_definitions(term)
-      service = ::WebServices::DictionaryApi.new(term)
+      service = WebServices::DictionaryApi.new(term)
       @definitions = service.all_definitions
       
       if @definitions
@@ -89,7 +89,7 @@ class WordsController < ApplicationController
     end
     
     def get_pronunciation(term)
-      service = ::WebServices::DictionaryApi.new(term)
+      service = WebServices::DictionaryApi.new(term)
       @pronunciation = service.get_pronunciation
     end
     
