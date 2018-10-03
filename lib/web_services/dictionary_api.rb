@@ -50,7 +50,12 @@ module WebServices
       
       def parse_payload_for_pronunciation(payload)
         first_entry = payload.xpath("//entry").first
-        @pronunciation = first_entry.xpath("pr").text
+        @pronunciation = ""
+        
+        if first_entry
+          @pronunciation = first_entry.xpath("pr").text
+        end
+        
         @pronunciation
       end
   end

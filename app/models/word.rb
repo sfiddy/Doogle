@@ -4,8 +4,6 @@ class Word < ApplicationRecord
   
   @valid = true
   
-  # QUESTION - How do i add attr_accessor for an attribute that's not in the database?
-  
   def is_valid_word
     if @valid == false
       errors.add(:term, "is not a real word")
