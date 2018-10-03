@@ -88,7 +88,6 @@ class WordsController < ApplicationController
       end
     end
     
-    
     def get_pronunciation(term)
       service = WebServices::DictionaryApi.new(term)
       @pronunciation = service.get_pronunciation
