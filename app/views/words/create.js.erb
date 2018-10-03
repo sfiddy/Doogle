@@ -1,5 +1,5 @@
 $("#word").html("<% if @word.get_valid %><h3><%= @word.term %><small class='text-muted'><%= @pronunciation %></i></small></h3><% end %>");
 
-// $("#definitions").html("<ul class='list-group'><%# @definitions.each do |definition| %> <li class='list-group-item'><%#= definition %></li><%# end %></ul>");
+$("#definitions").html("<ul class='list-group'><% @definitions.each do |definition| %> <li class='list-group-item'><%= definition %></li><% end %></ul>");
 
 $("#errors").html("<% @word.errors.full_messages.each do |error| %><li><%= error %><% end %></li>");
