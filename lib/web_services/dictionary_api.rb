@@ -25,6 +25,13 @@ module WebServices
     end
     
     
+    def get_pronunciation
+      @response = fetch_definitions
+      @payload  = Nokogiri::XML(@response.body)
+      @pronunciation = parse_payload_for_pronunciation(@payload)
+      @pronunciation
+    end
+    
     private
       def parse_definitions_payload(payload)
         first_entry = payload.xpath("//entry").first
@@ -40,6 +47,11 @@ module WebServices
         
         @definitions
       end
-
+      
+      def parse_payload_for_pronunciation(payload)
+        first_entry = payload.xpath("//entry").first
+        @pronunciation = first_entry.xpath("pr").text
+        @pronunciation
+      end
   end
 end

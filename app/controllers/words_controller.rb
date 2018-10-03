@@ -21,6 +21,8 @@ class WordsController < ApplicationController
     @word = Word.new(word_params)
     
     @definitions = get_definitions(@word.term)
+    @pronunciation = get_pronunciation(@word.term)
+    
     
     respond_to do |format|
       if @definitions.empty?
@@ -28,8 +30,6 @@ class WordsController < ApplicationController
       else
         @word.set_valid(true)
       end
-      
-      puts "-------------------"
       
       if @word.save
         puts "when word is saved, @word.get_valid : #{@word.get_valid}"
@@ -87,4 +87,11 @@ class WordsController < ApplicationController
         Array.new
       end
     end
+    
+    
+    def get_pronunciation(term)
+      service = WebServices::DictionaryApi.new(term)
+      @pronunciation = service.get_pronunciation
+    end
+    
 end
