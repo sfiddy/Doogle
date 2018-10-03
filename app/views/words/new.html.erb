@@ -1,8 +1,16 @@
 <div class="d-flex-inline justify-content-center col-6 offset-3">
+  <% if flash[:alert] %>
+    <div class="alert"><%= flash[:alert] %></div>
+  <% end %>
+  
+  <div id="errors"></div>
+  
   <div class="form-group">
     <%= render 'form', word: @word %>
   </div>
   
   <div id="word"></div>
   <div id="definitions"></div>
+  
+  
 </div>

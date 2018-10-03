@@ -1,4 +1,10 @@
-$("#word").html("<%= @word.term %>");
+$("#word").html("<% if @word.get_valid %><%= @word.term %><% end %>");
 
+$("#definitions").html("<% if @word.get_valid %><% @definitions.each do |definition| %> <li><%= definition %></li><% end %><% end %>");
 
-$("#definitions").html("<% @definitions.each do |definition| %> <li><%= definition %></li> <% end %>")
+$("#errors").html("<% @word.errors.full_messages.each do |error| %><li><%= error %><% end %></li>");
+
+// $("#search-btn").click(function(){
+//    $("#errors").addClass("alert alert-danger");
+// });
+

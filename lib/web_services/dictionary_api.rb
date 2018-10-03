@@ -36,15 +36,10 @@ module WebServices
             definition = d.text.gsub!(/^:/, '')
             @definitions.push(definition) # if definition != nil
           end          
-        else
-          # placeholder for error message
-          puts "first_entry is nil"
         end
         
-        
-
-      
-        return @definitions
+        @definitions
       end
+
   end
 end

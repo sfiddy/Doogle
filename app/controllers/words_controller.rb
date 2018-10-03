@@ -20,17 +20,21 @@ class WordsController < ApplicationController
   def create
     @word = Word.new(word_params)
     
+    @definitions = get_definitions(@word.term)
+    
     respond_to do |format|
+      if @definitions.empty?
+        @word.set_valid(false)
+      end
+      
       if @word.save
-        service = WebServices::DictionaryApi.new(@word.term)
-        @definitions = service.all_definitions
         format.js
-        format.html { redirect_to @word, notice: 'Word was successfully created.' }
         format.json { render :show, status: :created, location: @word }
       else
+        format.js
         format.html { render :new }
         format.json { render json: @word.errors, status: :unprocessable_entity }
-      end
+      end  
     end
   end
 
@@ -65,5 +69,16 @@ class WordsController < ApplicationController
 
     def word_params
       params.require(:word).permit(:term)
+    end
+    
+    def get_definitions(term)
+      service = WebServices::DictionaryApi.new(term)
+      @definitions = service.all_definitions
+      
+      if @definitions
+        @definitions
+      else
+        Array.new
+      end
     end
 end
