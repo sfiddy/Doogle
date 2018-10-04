@@ -1,14 +1,16 @@
 class Word < ApplicationRecord
+  has_many :definitions
   validates :term, presence: true
-  validate :is_valid_word, on: :create
+  validate :generate_errors, on: :create
   
   @valid = true
   
-  def is_valid_word
-    if @valid == false
-      errors.add(:term, "is not a real word")
+  def generate_errors
+    if term.empty?
+      errors.add(:term, "can't be blank")
+    elsif @valid == false
+      errors.add(:term, "does not exist")
     end
-    
   end
   
   def set_valid(valid)
