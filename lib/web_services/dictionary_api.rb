@@ -41,7 +41,7 @@ module WebServices
         if first_entry
           first_entry.children.xpath("dt").each do |d|
             definition = d.text.gsub!(/^:/, '')
-            @definitions.push(definition) # if definition != nil
+            @definitions.push(definition) if definition != nil
           end          
         end
         
