@@ -1,7 +1,15 @@
-# Doogle
+# Doogle (Status: _Pending_)
 Doogle is a dictionary based search engine. 
 
-Check it out [here](https://instant-ink-doogle.herokuapp.com/). 
+**Note**
+> Some minor work is still pending but the core functionality is completed & deployed. 
+> Come back friday morning for fully completed app.
+
+In the meantime, check it out [here](https://instant-ink-doogle.herokuapp.com/).
+
+
+You can access rails admin by visiting [https://instant-ink-doogle.herokuapp.com/admin](https://instant-ink-doogle.herokuapp.com/admin)
+
 
 ## Database Design
 Doogle's database layer is comprised of two tables with a *one-to-many association* since a 
@@ -21,8 +29,3 @@ Selenium::WebDriver::Error::UnknownError:
  unknown error: cannot find Chrome binary
    (Driver info: chromedriver=2.42.591071 (0b695ff80972cc1a65a5cd643186d2ae582cd4ac),platform=Linux 4.14.62-65.117.amzn1.x86_64 x86_64)
 ```
-
-### Useful Resources used
-* [Nokogiri Cheat Sheet](https://github.com/sparklemotion/nokogiri/wiki/Cheat-sheet)
-* [RSpec Expectations Cheat Sheet](https://www.rubypigeon.com/posts/rspec-expectations-cheat-sheet/)
-* [Rails Admin](https://github.com/sferik/rails_admin)
