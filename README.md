@@ -25,3 +25,4 @@ Selenium::WebDriver::Error::UnknownError:
 ### Useful Resources used
 * [Nokogiri Cheat Sheet](https://github.com/sparklemotion/nokogiri/wiki/Cheat-sheet)
 * [RSpec Expectations Cheat Sheet](https://www.rubypigeon.com/posts/rspec-expectations-cheat-sheet/)
+* [Rails Admin](https://github.com/sferik/rails_admin)
