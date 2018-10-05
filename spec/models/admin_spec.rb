@@ -1,5 +1,5 @@
 require 'rails_helper'
 
 RSpec.describe Admin, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  # No additional logic added to Admin model and therefore nothing to test.
 end
