@@ -93,7 +93,8 @@ class WordsController < ApplicationController
     
     def word_does_not_exist
       word = Word.new(word_params)
-      definitions = get_definitions(word.term)
+      definitions = make_api_call_and_parse_payload(word.term)
+      # definitions = get_definitions(word.term)
       
       return true if definitions.empty?
     end
@@ -111,18 +112,6 @@ class WordsController < ApplicationController
       
       if definitions
         definitions
-      else
-        Array.new
-      end
-    end
-
-    # TODO - Remove once refactored function takes its place
-    def get_definitions(term)
-      service = WebServices::DictionaryApi.new(term)
-      @definitions = service.all_definitions
-      
-      if @definitions
-        @definitions
       else
         Array.new
       end

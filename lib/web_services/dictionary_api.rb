@@ -35,17 +35,17 @@ module WebServices
     private
       def parse_definitions_payload(payload)
         first_entry = payload.xpath("//entry").first
-        
+
         @definitions = Array.new
         
         if first_entry
           first_entry.children.xpath("dt").each do |d|
-            definition = d.text.gsub!(/^:/, '')
+            definition = d.text.gsub(/^:/, '')
             @definitions.push(definition) if definition != nil
           end          
         end
         
-        @definitions
+        return @definitions
       end
       
       def parse_payload_for_pronunciation(payload)
