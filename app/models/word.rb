@@ -9,7 +9,7 @@ class Word < ApplicationRecord
     if term.empty?
       errors.add(:term, "can't be blank")
     elsif @valid == false
-      errors.add(:term, "does not exist")
+      errors.add(:term, "is not a real word")
     end
   end
   

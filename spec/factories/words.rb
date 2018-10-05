@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :word do
-    term "Term"
+    term "apple"
     
     
     factory :new_word do
-      term "Novelty"
+      term "novelty"
     end
     
   end

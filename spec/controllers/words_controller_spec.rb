@@ -55,26 +55,150 @@ RSpec.describe WordsController, type: :controller do
   end
 
   describe "POST #create" do
-    context "with a valid word" do
+    
+    it "should assign the searched word to @word" do
+      post :create, params: { :word => { :term => "novelty" } }, format: :js
       
-      it "creates a new Word" do
-        expect {
-          post :create, params: {word: FactoryBot.attributes_for(:new_word)}, session: valid_session
-        }.to change(Word, :count).by(1)
-      end
-      
-      it "redirects to the created word's show page" do
-        post :create, params: { word: FactoryBot.attributes_for(:new_word) }
-        expect(response).to redirect_to(word_path(assigns[:word]))
-      end
+      expect(assigns.keys).to include('word')
+      expect(assigns(:word).term).to eq("novelty")
     end
+    
+    # TODO - Move these two specs to feature spec
+    it "should populate <div id='word'> with the valid searched word"
+    it "should populate <div id='definitions'> with the definitions"
+    
+    
+    context "with a valid word" do 
+      
+      it "should assign @definitions with an array of definitions" do
+        post :create, params: { :word => { :term => "novelty" } }, format: :js
+        
+        expect(assigns.keys).to include('definitions')
+        expect(assigns(:definitions)).to be_an Array
+      end
+      
+      describe "that does not exist in the database" do 
+        
+        it "should store the word in the database" do
+          expect {
+            post :create, params: { :word => { :term => "novelty" } }, format: :js
+          }.to change(Word, :count).by(1)
+        end
+        
+        it "should store the definitions in the database" do
+          expect {
+            post :create, params: { :word => { :term => "novelty" } }, format: :js
+          }.to change(Definition, :count)
+        end
+        
+        it "should not redirect to a different page" do
+          post :create, params: { :word => { :term => "novelty" } }, format: :js
+          
+          expect(response).to render_template("words/create")
+        end  
+        
+      end
+      
+      describe "that does exist in the database" do 
+        
+        it "should retrieve the pronunciation from the database" do 
+          expect(assigns.keys).to_not include('pronunciation')
+          post :create, params: { :word => { :term => "novelty" } }, format: :js
+          expect(assigns.keys).to include('pronunciation')
+        end
+        
+        it "should retrieve the definitions from the database" do
+          expect(assigns.keys).to_not include('definitions')
+          post :create, params: { :word => { :term => "novelty" } }, format: :js
+          expect(assigns.keys).to include('definitions')
+        end
+        
+        it "should not store the word in the database" do 
+          post :create, params: { :word => { :term => "novelty" } }, format: :js
+          
+          expect {
+            post :create, params: { :word => { :term => "novelty" } }, format: :js
+          }.to_not change(Word, :count) 
+        end
+        
+        it "should not store the definitions in the database" do
+          post :create, params: { :word => { :term => "novelty" } }, format: :js
+          
+          expect {
+            post :create, params: { :word => { :term => "novelty" } }, format: :js
+          }.to_not change(Definition, :count) 
+        end
+        
+      end
+      
+    end
+    
+    context "with an invalid word" do 
+    
+      describe "that is blank" do
+        
+        it "should raise an error" do 
+          expect { 
+            post :create, params: { :word => { :term => " " } }, format: :js
+          }.to raise_error
+        end
+        
+        it "should not assign @definitions or @pronunciation" do
+          expect { 
+            post :create, params: { :word => { :term => " " } }, format: :js
+          }.to raise_error
+          
+          expect(assigns.keys).to_not include('definitions')
+          expect(assigns.keys).to_not include('pronunciation')
+        end
+        
+        it "should not save the invalid word in the database" do # TODO - determine if it's worth figuring out how to write test
+          expect { 
+            post :create, params: { :word => { :term => " " } }, format: :js
+          }.to raise_error.and change(Word, :count).by(0)
+        end
+        
+      end
+    
+      describe "that is a non-existent word" do 
+        
+        it "should raise an error" do # for some reason an error isn't detected
+          pending
+          expect { 
+            post :create, params: { :word => { :term => "asdf" } }, format: :js
+          }.to raise_error
+        end
+        
+        it "should not assign @definitions or @pronunciation" do
+          post :create, params: { :word => { :term => "asdf" } }, format: :js
+          
+          expect(assigns(:definitions)).to be_empty
+          expect(assigns.keys).to_not include('pronunciation')
+        end
+        
+        it "should not save the invalid word or definitions to the database" do
+          expect { 
+            post :create, params: { :word => { :term => "asdf" } }, format: :js
+          }.to_not change(Word, :count)
+          expect { 
+            post :create, params: { :word => { :term => "asdf" } }, format: :js
+          }.to_not change(Definition, :count)
+          
+          word_query = Word.find_by(term: "asdf")
+          
+          expect(word_query).to be_falsey
+          expect{ word_query.definitions }.to raise_error # used raise_error b/c unable to query nil word obj. If error is raised then no definition exists in the database for that queried word.
+        end
 
-    context "with an invalid word" do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {word: invalid_attributes}, session: valid_session
-        expect(response).to be_successful
+        it "should return a success response (i.e. to display the 'new' template)" do
+          post :create, params: { :word => { :term => "asdf" } }, format: :js
+          expect(response).to be_successful
+        end
+        
       end
+      
     end
+      
   end
 
   describe "PUT #update" do

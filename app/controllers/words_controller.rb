@@ -22,48 +22,33 @@ class WordsController < ApplicationController
   def create
     @word = Word.new(word_params)
     
-    @pronunciation = get_pronunciation(@word.term)
-    
     respond_to do |format|
-      # if word_is_valid
-        # format js 
-        # format json
-        # if word_not_in_database
-          # make api call
-          # parse payload
-          # store word, pronunciation & definition derived from the payload in database (pending pronunciation store)
-          # store in respective variables
-        # else
-          # retrieve word, pronunciation & definition from database
-          # store in respective variables
-      # else 
-        # alert user of error
-        # hide word & definition divs
-      
       if word_is_valid
-        puts "===> word is valid"
         @word.set_valid(true)
+        @pronunciation = get_pronunciation(@word.term)
+        
         format.js
         format.json { render :show, status: :created, location: @word }
         
         if word_not_in_database
-          puts "   ===> word is not in the database."
           @definitions = make_api_call_and_parse_payload(@word.term)
           save_word_and_definitions_to_database(@word, @definitions)
         else
-          puts "   ===> word is in the database"
           # @pronunciation = retrieve_pronunciation_from_database(@word.term) # implement once pronunciation is added to words table
           @definitions = retrieve_definitions_from_database(@word.term)
         end
-        
       else
-        puts "===> word is not valid"
-        @word.set_valid(false)
-        @word.generate_errors
-        format.js
-        format.html { render :new }
-        format.json { render json: @word.errors, status: :unprocessable_entity }   
+        begin
+          raise "#{@word.term} is not a real word"
+        rescue StandardError => e
+          @word.set_valid(false)
+          @word.generate_errors
+          format.js
+          format.html { render :new }
+          format.json { render json: e, status: :unprocessable_entity }  
+        end
       end
+      
     end
   end
 
@@ -122,10 +107,10 @@ class WordsController < ApplicationController
     
     def make_api_call_and_parse_payload(term)
       service = WebServices::DictionaryApi.new(term)
-      @definitions = service.all_definitions
+      definitions = service.all_definitions
       
-      if @definitions
-        @definitions
+      if definitions
+        definitions
       else
         Array.new
       end
