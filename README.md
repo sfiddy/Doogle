@@ -11,6 +11,11 @@ In the meantime, check it out [here](https://instant-ink-doogle.herokuapp.com/).
 You can access rails admin by visiting [https://instant-ink-doogle.herokuapp.com/admin](https://instant-ink-doogle.herokuapp.com/admin)
 
 
+## Questions I have
+- I was unable to test my feature specs given the fact that I wasn't able to downlaod 
+the Selenium driver to a cloud IDE. Can you guys give me some feedback on my feature specs?
+
+
 ## Database Design
 Doogle's database layer is comprised of two tables with a *one-to-many association* since a 
 word can have multiple definitions. 

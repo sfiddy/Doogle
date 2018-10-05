@@ -7,14 +7,14 @@
 
       <div class="field">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", id: "email-field" %>
       </div>
     
       <div class="field">
         <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "form-control", id: "password-field" %>
         <small class="form-text text-muted">
-          <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+          <%= link_to "Forgot your password?", new_password_path(resource_name), id: "forgot-password-link" %>
         </small>
       </div>
     
@@ -26,7 +26,7 @@
       <% end -%>
     
       <div class="actions text-center">
-        <%= f.submit "Log in", class: "btn btn-primary btn-lg" %>
+        <%= f.submit "Log in", class: "btn btn-primary btn-lg", id: "log-in-to-rails-admin-btn" %>
       </div>
     <% end %>
   
@@ -34,4 +34,5 @@
   
   <p><em>Don't have a rails admin account?</em></p>
   <%= render "devise/shared/links" %>
+
 </div>

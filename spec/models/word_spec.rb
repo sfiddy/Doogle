@@ -4,29 +4,38 @@ RSpec.describe Word, type: :model do
   
   describe "word search validation" do
     
-    context "an empty word" do
-      it "should validate the presence of term" do
-        should validate_presence_of(:term)
+    context "with a valid word" do
+      it "should set the word as valid"
+    end
+    
+    context "with an invalid word" do
+      it "should set the word as invalid"
+      
+      describe "that is blank" do
+        it "should validate the presence of term" do
+          should validate_presence_of(:term)
+        end
+        
+        it "properly generates an error message"
+        
+        it "should add a message to errors array" do
+          word = FactoryBot.build(:word, term: ' ' )
+          word.valid?
+          expect(word.errors[:term]).not_to be_empty
+        end
       end
       
-      it "should display an error" do
-        word = FactoryBot.build(:word, term: ' ' )
-        word.valid?
-        expect(word.errors[:term]).not_to be_empty
+      describe "that does not exist" do
+        it "should not save to the database"
+        it "should add a message to errors array"
       end
+
     end
     
-    context "an invalid word" do
-      it "should display an error"
-      it "should not be stored in the database"
-    end
-    
-    context "an valid word" do
-      it "should search the local database"
-      it "should make an API call if not in the local database"
-      it "isn't in the local database should be stored in the database"
-    end
-    
+  end
+  
+  describe "table associations" do 
+    it "words table should have a one-to-many association with definitions table"
   end
   
 end

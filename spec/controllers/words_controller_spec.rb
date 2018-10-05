@@ -63,10 +63,6 @@ RSpec.describe WordsController, type: :controller do
       expect(assigns(:word).term).to eq("novelty")
     end
     
-    # TODO - Move these two specs to feature spec
-    it "should populate <div id='word'> with the valid searched word"
-    it "should populate <div id='definitions'> with the definitions"
-    
     
     context "with a valid word" do 
       
@@ -160,7 +156,7 @@ RSpec.describe WordsController, type: :controller do
         
       end
     
-      describe "that is a non-existent word" do 
+      describe "that does not exist" do 
         
         it "should raise an error" do # for some reason an error isn't detected
           pending
