@@ -10,6 +10,7 @@ You can access rails admin by visiting [https://instant-ink-doogle.herokuapp.com
 - I was unable to test my feature specs given the fact that I wasn't able to downlaod 
 the Selenium driver to a cloud IDE. Can you guys give me some feedback on my feature specs?
 - I found it difficult to do this project in the BDD way. In most cases, I ended up writing the code and then the tests. Does anyone have advice as to how to get in the habit of writing tests first?
+- For the views specs, I did not modify the auto-generated tests because I wasn't sure what the use case is for them. What's the difference between what you test in a feature vs in a view?
 - Any general feedback is also appreciated:)
 
 ----------
