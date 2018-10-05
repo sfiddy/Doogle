@@ -1,5 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Definition, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "Associations" do
+    it "should belong to Word" do
+      should belong_to :word
+    end
+    
+    it "should validate presence of word id" do
+      should validate_presence_of :word_id
+    end
+  end
 end

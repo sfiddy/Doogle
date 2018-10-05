@@ -6,7 +6,7 @@ class Word < ApplicationRecord
   @valid = true
   
   def generate_errors
-    if term.empty?
+    if term.nil? || term.empty?
       errors.add(:term, "can't be blank")
     elsif @valid == false
       errors.add(:term, "is not a real word")
