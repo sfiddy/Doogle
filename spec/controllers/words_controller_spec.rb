@@ -1,21 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe WordsController, type: :controller do
-
-  # This should return the minimal set of attributes required to create a valid
-  # Word. As you add validations to Word, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { term: "apple" }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { term: " " }
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # WordsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe "GET #index" do
@@ -74,7 +67,6 @@ RSpec.describe WordsController, type: :controller do
       end
       
       describe "that does not exist in the database" do 
-        
         it "should store the word in the database" do
           expect {
             post :create, params: { :word => { :term => "novelty" } }, format: :js
@@ -92,11 +84,9 @@ RSpec.describe WordsController, type: :controller do
           
           expect(response).to render_template("words/create")
         end  
-        
       end
       
       describe "that does exist in the database" do 
-        
         it "should retrieve the pronunciation from the database" do 
           expect(assigns.keys).to_not include('pronunciation')
           post :create, params: { :word => { :term => "novelty" } }, format: :js
@@ -124,7 +114,6 @@ RSpec.describe WordsController, type: :controller do
             post :create, params: { :word => { :term => "novelty" } }, format: :js
           }.to_not change(Definition, :count) 
         end
-        
       end
       
     end
@@ -132,7 +121,6 @@ RSpec.describe WordsController, type: :controller do
     context "with an invalid word" do 
     
       describe "that is blank" do
-        
         it "should raise an error" do 
           expect { 
             post :create, params: { :word => { :term => " " } }, format: :js
@@ -153,11 +141,9 @@ RSpec.describe WordsController, type: :controller do
             post :create, params: { :word => { :term => " " } }, format: :js
           }.to raise_error.and change(Word, :count).by(0)
         end
-        
       end
     
       describe "that does not exist" do 
-        
         it "should raise an error" do # for some reason an error isn't detected
           pending
           expect { 
@@ -168,7 +154,7 @@ RSpec.describe WordsController, type: :controller do
         it "should not assign @definitions or @pronunciation" do
           post :create, params: { :word => { :term => "asdf" } }, format: :js
           
-          expect(assigns(:definitions)).to be_empty
+          expect(assigns(:definitions)).to be_falsey
           expect(assigns.keys).to_not include('pronunciation')
         end
         
@@ -190,7 +176,6 @@ RSpec.describe WordsController, type: :controller do
           post :create, params: { :word => { :term => "asdf" } }, format: :js
           expect(response).to be_successful
         end
-        
       end
       
     end
