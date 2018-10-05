@@ -1,19 +1,63 @@
-# Doogle (Status: _Pending_)
+# Doogle
 Doogle is a dictionary based search engine. 
 
-**Note**
-> Some minor work is still pending but the core functionality is completed & deployed. 
-> Come back friday morning for fully completed app.
-
-In the meantime, check it out [here](https://instant-ink-doogle.herokuapp.com/).
-
+Check it out [here](https://instant-ink-doogle.herokuapp.com/).
 
 You can access rails admin by visiting [https://instant-ink-doogle.herokuapp.com/admin](https://instant-ink-doogle.herokuapp.com/admin)
 
 
-## Questions I have
+## Questions for you
 - I was unable to test my feature specs given the fact that I wasn't able to downlaod 
 the Selenium driver to a cloud IDE. Can you guys give me some feedback on my feature specs?
+
+----------
+
+## Implementation
+The file directory below shows the project structure for the most important files.
+```
+.
+├── app 
+│   ├── controllers
+│   │   └── words_controller.rb             # Core definition search logic lives in words#create.
+│   │
+│   ├── models
+│   │   ├── admin.rb                        # Model for Rails Admin. No custom code added.
+│   │   ├── definition.rb                   # Model for definitions tables. It belongs to Word. 
+│   │   └── word.rb                         # Model for word table. It can have many definitions
+│   │
+│   ├── views
+│   │   ├── devise                          # All views for auth for rails admin lives here.
+│   │   └── words                           # All views for word search logic lives here.
+│   │       ├── _form.html.erb              # Word search form
+│   │       ├── new.html.erb                # Landing page
+│   │       └── create.js.erb               # Word & definitions are rendered to the landing page via jquery 
+│   │
+│   ├── config
+│   │   └── application.yml                  # Dictionary API token lives here.
+│   │
+│   ├── lib
+│   │   └── web_services           
+│   │       └── dictionary_api.rb            # API call & payload processing happens here.
+│   │ 
+│   ├── spec
+│   │   ├── controllers          
+│   │   │   └── words_controller_spec.rb     # Spec for words_controller. Focus on specs for POST#create.
+│   │   ├── features          
+│   │   │   ├── rails_admin_feature_Spec.rb  # Feature Spec that tests rails admin login/signin functionality
+│   │   │   └── word_search_feature_spec.rb  # Feature Spec that tests word search functionality
+│   │   ├── lib          
+│   │   │   └── web_services         
+|   │   │       └── dictionary_api_spec.rb   # Spec that tests external api call 
+│   │   ├── models          
+│   │   │   ├── definition_spec.rb           # Model spec for Definition. Only tests for association & validation
+│   │   │   └── word_spec.rb                 # Model spec for Word. 
+│   │   ├── routing          
+│   │   │   └── words_routing_spec.rb        # Tests that the routes are set up correctly. Does not test rails admin routes
+│   │ 
+│   └── ...                 # etc.
+└── ...
+
+```
 
 
 ## Database Design
