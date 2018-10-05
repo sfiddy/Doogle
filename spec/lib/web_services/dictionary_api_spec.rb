@@ -30,14 +30,9 @@ RSpec.describe WebServices::DictionaryApi do
     it "should properly concatanate the full url" do
       expect(subject.full_url).to eq(full_url)
     end
-    
-    it "should not allow unescaped characters in params" # TODO - test this @ the model or feature spec level
   end
   
   describe ".all_definitions" do
-    # TODO - find out how to generate multiple tests of this kind
-    # TODO - take into account when you have test[1] variations
-    
     context "for a valid word" do
       it "should not include any empty definitions" do
         subject = WebServices::DictionaryApi.new("test")
@@ -50,10 +45,8 @@ RSpec.describe WebServices::DictionaryApi do
       
       it "should only include definitions for the searched word" do
         subject = WebServices::DictionaryApi.new("apple")
-        
-        # TODO - Move lines 92-94 into a separate function
-        # retrieves a definition for a similar word. i.e "apple-butter"
         payload = Nokogiri::XML(subject.fetch_definitions.body)
+        
         similar_word_entry = payload.xpath("//entry")[1]
         similar_word_definition = similar_word_entry.last_element_child.last_element_child.text.gsub!(/^:/, '')
         
